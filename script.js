@@ -9,11 +9,10 @@ getHoverEffect();
 const btn = document.querySelector('.btn');
 btn.addEventListener('click', () => {
 
-    columns = prompt("Enter width: ");
-    rows = prompt("Enter length");
+    let userDimensions = getUserDimensions(); 
 
     removeGrid();
-    getGrid(columns, rows);
+    getGrid(userDimensions[0], userDimensions[1]);
     getHoverEffect();
 });
 
@@ -63,4 +62,25 @@ function getHoverEffect() {
             e.target.style.backgroundColor = 'black';
         });
     });    
+}
+
+/**
+ * Function to prompt user for grid dimensions
+ */
+function getUserDimensions() {
+    let userDimension = [];
+
+    userDimension[0] = prompt("Enter width: ");
+
+    while ((userDimension[0] > 32)) {
+        userDimension[0] = prompt("Sorry, should have been specific. Enter a width no greater than 100 squares: ");
+    }
+
+    userDimension[1] = prompt("Enter length: ");
+
+    while ((userDimension[1] > 32)) {
+        userDimension[1] = prompt("Sorry, should have been specific. Enter a length no greater than 100 squares: ");
+    }
+
+    return userDimension;
 }

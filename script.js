@@ -1,15 +1,18 @@
+/////// Create initial grid /////////////
 let columns = 16;
 let rows = 16;
 
 getGrid(columns, rows);
 getHoverEffect();
 
+/////// Create user grid ////////////////
 const btn = document.querySelector('.btn');
 btn.addEventListener('click', () => {
 
     columns = prompt("Enter width: ");
     rows = prompt("Enter length");
 
+    removeGrid();
     getGrid(columns, rows);
     getHoverEffect();
 });
@@ -36,6 +39,18 @@ function getGrid (columns, rows) {
         
         gridContainer.appendChild(col);
     }
+}
+
+/**
+ * Function to remove grid
+ */
+function removeGrid() {
+    const gridContainer = document.querySelector('.gridContainer');
+    const allTiles = document.querySelectorAll('.container')
+    
+    allTiles.forEach( (tile) => {
+        gridContainer.removeChild(tile);
+    });  
 }
 
 /**

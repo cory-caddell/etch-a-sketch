@@ -1,5 +1,5 @@
 # etch-a-sketch
-Grid that's a cross between a sketchpad and etch-a-sketch
+## Grid that's a cross between a sketchpad and etch-a-sketch
 
 Create initial 16 x 16 grid.
 

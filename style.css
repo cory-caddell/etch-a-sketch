@@ -4,15 +4,19 @@
     padding: 0;
 }
 
-
 .gridContainer,
 .btnContainer {
     display: flex;
     justify-content: center;
 }
 
+.btn {
+    display: flex;
+    padding-top: 20px;    
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
 .tile {
-    height: 25px;
-    width: 25px;
     border-style: solid;
 }

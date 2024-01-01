@@ -1,9 +1,8 @@
 /////// Create initial grid /////////////
-let columns = 16;
-let rows = 16;
+const maxContainerSize = 960;
+let initialDimensions = 16;
 
-getGrid(columns, rows);
-getHoverEffect();
+setGrid(initialDimensions, maxContainerSize);
 
 /////// Create user grid ////////////////
 const btn = document.querySelector('.btn');
@@ -12,8 +11,7 @@ btn.addEventListener('click', () => {
     let userDimensions = getUserDimensions(); 
 
     removeGrid();
-    getGrid(userDimensions[0], userDimensions[1]);
-    getHoverEffect();
+    setGrid(userDimensions, maxContainerSize);
 });
 
 
@@ -22,22 +20,26 @@ btn.addEventListener('click', () => {
 /**
  * Function to create grid
  */
-function getGrid (columns, rows) {
+function setGrid (dimensions, maxContainerSize) {
     const gridContainer = document.querySelector('.gridContainer');
 
-    for (let i = 0; i < columns; i++) {
+    for (let i = 0; i < dimensions; i++) {
         
         let col = document.createElement('div');
         col.classList.add('container');
         
-        for (let j = 0; j < rows; j++) {
+        for (let j = 0; j < dimensions; j++) {
             let row = document.createElement('div');
             row.classList.add('tile');
             col.appendChild(row);
         }
         
         gridContainer.appendChild(col);
+
     }
+
+    setTileFormatting(dimensions, maxContainerSize)
+
 }
 
 /**
@@ -55,11 +57,17 @@ function removeGrid() {
 /**
  * Function to create hover effect
  */
-function getHoverEffect() {
+function setTileFormatting(dimensions, maxContainerSize) {
     const allTiles = document.querySelectorAll('.tile')
+
+    
     allTiles.forEach( (tile) => {
-        tile.addEventListener('mouseover', (e) => {
-            e.target.style.backgroundColor = 'black';
+        let tileSize = setTileSize(dimensions, maxContainerSize)
+        tile.style.width = tileSize;
+        tile.style.height = tileSize;
+        
+        tile.addEventListener('mouseover', (e) => {   
+            e.target.style.backgroundColor = randomRGB();
         });
     });    
 }
@@ -68,19 +76,34 @@ function getHoverEffect() {
  * Function to prompt user for grid dimensions
  */
 function getUserDimensions() {
-    let userDimension = [];
+    let userDimensions = prompt("Enter grid dimensions: ");
 
-    userDimension[0] = prompt("Enter width: ");
-
-    while ((userDimension[0] > 32)) {
-        userDimension[0] = prompt("Sorry, should have been specific. Enter a width no greater than 100 squares: ");
+    while ((userDimensions < 0) || (userDimensions > 100)) {
+        userDimensions = prompt("Sorry, should have been specific. Enter a " +
+            "dimension no greater than 100 squares, and obviously greater than 0 squares: ");
     }
 
-    userDimension[1] = prompt("Enter length: ");
-
-    while ((userDimension[1] > 32)) {
-        userDimension[1] = prompt("Sorry, should have been specific. Enter a length no greater than 100 squares: ");
-    }
-
-    return userDimension;
+    return userDimensions;
 }
+
+/**
+ * Generate random RGB effect
+ */
+function randomRGB() {
+    let x = Math.floor(Math.random() * 256);
+    let y = Math.floor(Math.random() * 256);
+    let z = Math.floor(Math.random() * 256);
+    return "rgb(" + x + "," + y + "," + z + ")";  
+    
+}
+
+/**
+ * Set tile size.
+ */
+function setTileSize(dimensions, maxContainerSize) {
+    let tileSize = maxContainerSize / dimensions;
+    return '' + tileSize + 'px';
+}
+
+
+  
